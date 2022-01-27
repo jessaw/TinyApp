@@ -4,6 +4,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 # Create Users models 
+class User(AbstractUser):
+    pass
+
 class Users(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -13,9 +16,8 @@ class Users(models.Model):
 
 # create url model 
 class Url(models.Model):
-    shortUrl = models.CharField(max_length=200)
-    longUrl = models.CharField(max_length=50)
+    short_url = models.CharField(max_length=200)
+    long_url = models.CharField(max_length=200)
+    user= models.ForeignKey(User, on_delete=models.CASCADE, default= '')
     date_created = models.DateTimeField('date created')
 
-class User(AbstractUser):
-    pass
