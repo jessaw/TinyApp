@@ -1,12 +1,15 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import CreateView,ListView
+from django.views.generic import CreateView,ListView,DetailView,View
 from .models import User, Url
 from .forms import UrlCreateForm, UserRegisterForm
 from django.forms import ModelForm, TextInput
 import random
-import string, datetime
+import string
+from datetime import date 
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 class UserRegistrationView(CreateView):
     form_class = UserRegisterForm
@@ -30,18 +33,29 @@ class UrlModelForm(ModelForm):
 
 class UrlCreateView(CreateView):
     form_class = UrlModelForm
-    success_url = '/urls'
+    success_url = '/urls/'
     template_name = 'urls_new.html'
     
     def shortURLCreator(self):
         x = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
         return x
     def form_valid(self, form):
-        user = User.objects.filter(username = 'jess')
+        user = User.objects.first()
+            # username = 'jess').values_list('id')
         form.instance.user = user
         form.instance.short_url = self.shortURLCreator()
-        form.instance.date_created = datetime.today()
+        form.instance.date_created = date.today()
         return super().form_valid(form)
-# def post(self, request):
-#         form = self.form_class(request.POST)
-#         return self.form_valid(self.form)
+
+class UrlDetailView(DetailView):
+    model = Url
+    template_name= 'urls_detail.html'
+
+
+class UrlRedirectView(DetailView):
+    def get(self, request, short_url):
+        url=Url.objects.get(short_url = short_url)
+        # long= Url.objects.values_list('long_url', flat= True).get(short_url = short_url)
+       
+        return HttpResponseRedirect(url.long_url)
+        # 

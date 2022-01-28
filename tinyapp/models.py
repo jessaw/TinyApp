@@ -16,8 +16,8 @@ class Users(models.Model):
 
 # create url model 
 class Url(models.Model):
-    short_url = models.CharField(max_length=200)
-    long_url = models.CharField(max_length=200)
-    user= models.ForeignKey(User, on_delete=models.CASCADE, default= '')
+    short_url = models.URLField(max_length=200)
+    long_url = models.URLField(max_length=200)
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
     date_created = models.DateTimeField('date created')
 
