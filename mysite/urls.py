@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from tinyapp.views import UserRegistrationView,UrlListView,UrlCreateView,UrlDetailView, UrlRedirectView
+from django.urls import path, include
+from tinyapp.views import UserRegistrationView,UserLoginView
+from tinyapp.views import UrlListView,UrlCreateView,UrlDetailView, UrlRedirectView,UrlDeleteView,UrlUpdateView
+from django.contrib.auth.views import LogoutView,PasswordChangeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,7 +25,14 @@ urlpatterns = [
     path('urls/',UrlListView.as_view(), name = 'urls'),
     path('urls/new/',UrlCreateView.as_view(), name='urls-new'),
     path('urls/<pk>', UrlDetailView.as_view(), name='urls-detail'),
-    path('u/<short_url>', UrlRedirectView.as_view(), name='urls-redirect')
+    path('u/<short_url>', UrlRedirectView.as_view(), name='urls-redirect'),
+    path('urls/delete/<pk>', UrlDeleteView.as_view(), name= 'urls-delete'),
+    path('urls/edit/<pk>', UrlUpdateView.as_view(), name= 'urls-edit'),
+    path('login/',UserLoginView.as_view(), name = 'login'),
+    path('logout/',LogoutView.as_view(), name='user_logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('change-password/', PasswordChangeView.as_view()),
+    path('', UrlListView.as_view(), name = 'main')
 ]
 
 

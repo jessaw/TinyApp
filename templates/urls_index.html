@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+
+{% if user.is_authenticated %}
 <main class="container">
     <h3>My URLs</h3>
     <table class="table">
@@ -7,6 +9,8 @@
             <tr>
                 <th scope="col">Short URL</th>
                 <th scope="col">Long URL</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -14,9 +18,26 @@
             <tr>
                 <td>{{ url.short_url }}</td>
                 <td>{{ url.long_url }}</td>
+                <td>
+                    <form method="POST" action="{% url 'urls-delete' url.id %}">{% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'urls-edit' url.id %}">{% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Edit</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </main>
+{% endif %}
+
+{% if user.is_authenticated == False %}
+<p> Thou shalt not pass ! Please <a href="{% url 'login' %}"> Login</a> or <a href="{% url 'register' %}">
+        Register</a>
+</p>
+{% endif %}
 {% endblock %}
