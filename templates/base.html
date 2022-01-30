@@ -31,6 +31,11 @@
                     <li class="nav-item {{ 'nav-link active' }}"> <a href="{% url 'urls-new' %}"
                             style='color:white; text-decoration:none'>Create New Url</a></li>
                     </li>
+                    {% if perms.tinyapp.view_user %}
+                    <li class="nav-item {{ 'nav-link active' }}"> <a href="{% url 'userlist' %}"
+                            style='color:white; text-decoration:none'>My Tiny Userlist</a></li>
+                    {% endif %}
+                    </li>
                 </ul>
             </div>
             {% if user.is_authenticated == False %}

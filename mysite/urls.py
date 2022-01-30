@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from tinyapp.views import UserRegistrationView,UserLoginView
+from tinyapp.views import UserRegistrationView,UserLoginView,SeeAdminsView
 from tinyapp.views import UrlListView,UrlCreateView,UrlDetailView, UrlRedirectView,UrlDeleteView,UrlUpdateView
 from django.contrib.auth.views import LogoutView,PasswordChangeView
 
@@ -32,7 +32,8 @@ urlpatterns = [
     path('logout/',LogoutView.as_view(), name='user_logout'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('change-password/', PasswordChangeView.as_view()),
-    path('', UrlListView.as_view(), name = 'main')
+    path('', UrlListView.as_view(), name = 'main'),
+    path('userlist/', SeeAdminsView.as_view(), name = 'userlist')
 ]
 
 

@@ -2,6 +2,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="card text-center">
+    <p>You have visited this page {{total_visits}} time </p>
     <div class="card-header"></div>
     <div class="card-body">
         <h5 class="card-title">TinyURL for: {{ url.long_url }}</h5>
