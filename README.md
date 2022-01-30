@@ -1,4 +1,4 @@
-# TinyApp
+
 # TinyApp Project
 
 TinyApp is a full stack web application built with Python and Django that allows users to shorten long URLs (à la bit.ly).
