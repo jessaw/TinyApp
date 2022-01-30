@@ -1,0 +1,5 @@
+
+SECRET_KEY=django-insecure-)(nwrgvc7hhvub%74$iq-wowy%rdf9i-chkmp3(xb0ee-64b!&
+DATABASE_NAME=tinyappjess
+DATABASE_USER=tiny_user
+DATABASE_PASS=password
