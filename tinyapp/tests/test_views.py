@@ -1,6 +1,7 @@
 import datetime
-from django.test import TestCase
+from django.test import TestCase, Client
 from tinyapp.models import User, Url
+from django.urls import reverse
 
 
 
@@ -48,10 +49,30 @@ class ViewsTest(TestCase):
             user=self.user,
             date_created=datetime.datetime.now()
         )
-        self.url_4 = Url.objects.create(
+        self.url_5 = Url.objects.create(
             short_url='usU25P',
             long_url='http://www.KLM.ca',
             user=self.user,
             date_created=datetime.datetime.now()
         )
-        
+
+    def test_url_list_view_logged_in(self):
+        c = Client()
+        login_response = c.post('/login/',{'username':'LP','password':'bootcamp'})
+        print(login_response)
+        self.assertEqual(login_response.status_code, 302)
+        self.assertEqual(login_response.url, '/urls')
+  
+ 
+    def test_user_register_template(self):
+        url = reverse('register')
+        self.response = self.client.post(url)
+        self.assertEqual(self.response.status_code, 200)
+        self.assertTemplateUsed(self.response, 'register.html')
+
+    def test_user_register_view(self):
+        c = Client()
+        login_response = c.post('/register/',{'first_namne':'Luke','last_name':'Peterson','email':'LP@example.com','username':'LP','password':'bootcamp'})
+        self.assertEqual(login_response.url, '/urls')
+        self.assertEqual(login_response.status_code, 302)
+       
